@@ -172,7 +172,7 @@ public class GUI {
 
                         // Kết nối CSDL và cập nhật
                         Connection cnn = new ConnectMySql().getConnection(DB_URL, USER_NAME, PASSWORD);
-                        String query = "UPDATE bang SET ten = ?, tuoi = ?, noisinh = ?, diem = ? WHERE id = ?";
+                        String query = "UPDATE bang SET name = ?, age = ?, address = ?, gpa = ? WHERE id = ?";
                         PreparedStatement pstmt = cnn.prepareStatement(query);
                         pstmt.setString(1, txtTen.getText());
                         pstmt.setString(2, txtTuoi.getText());
