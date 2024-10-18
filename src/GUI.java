@@ -1,121 +1,106 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author kduon
+ */
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.*;
 
-public class GUI extends JFrame {
-    // Khai báo các thành phần giao diện
-    private JTextField txtMa, txtTen, txtTuoi, txtNoiSinh, txtDiem;
-    private JButton btnThem, btnXoa, btnSua, btnThoat;
-    private JTable table;
-    private DefaultTableModel model;
+public class GUI {
+    JTextField txtMa = new JTextField();
+    JTextField txtTen = new JTextField();
+    JTextField txtNoisinh = new JTextField();
+    JTextField txtTuoi = new JTextField();
+    JTextField txtDiem = new JTextField();
+    JButton btnThem = new JButton("Them");
+    JButton btnXoa = new JButton("Xoa");
+    JButton btnSua = new JButton("Sua");
+    JButton btnThoat = new JButton("Thoat");
+    // bang
+    public String[] col = { "Ma", "Ho ten", "Tuoi", "Noi sinh", "Diem" };
+    public String[][] row = {};
+    public DefaultTableModel model = new DefaultTableModel(row, col);
+    public JTable table = new JTable(model);
+    //
+    String DB_URL = "jdbc:mysql://localhost:3306/csdldk";
+    String USER_NAME = "root";
+    String PASSWORD = "";
 
-    public GUI() {
-        // Thiết lập giao diện form
-        setTitle("Form đăng ký");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Căn giữa màn hình
-        setLayout(null);
-
-        // Tạo các label và textfield
-        JLabel lblMa = new JLabel("Ma :");
-        lblMa.setBounds(20, 20, 100, 20);
-        add(lblMa);
-        txtMa = new JTextField();
-        txtMa.setBounds(120, 20, 150, 20);
-        add(txtMa);
-
-        JLabel lblTen = new JLabel("Ten :");
-        lblTen.setBounds(20, 50, 100, 20);
-        add(lblTen);
-        txtTen = new JTextField();
-        txtTen.setBounds(120, 50, 150, 20);
-        add(txtTen);
-
-        JLabel lblTuoi = new JLabel("Tuoi :");
-        lblTuoi.setBounds(20, 80, 100, 20);
-        add(lblTuoi);
-        txtTuoi = new JTextField();
-        txtTuoi.setBounds(120, 80, 150, 20);
-        add(txtTuoi);
-
-        JLabel lblNoiSinh = new JLabel("Noi Sinh :");
-        lblNoiSinh.setBounds(20, 110, 100, 20);
-        add(lblNoiSinh);
-        txtNoiSinh = new JTextField();
-        txtNoiSinh.setBounds(120, 110, 150, 50);
-        add(txtNoiSinh);
-
-        JLabel lblDiem = new JLabel("Diem :");
-        lblDiem.setBounds(20, 170, 100, 20);
-        add(lblDiem);
-        txtDiem = new JTextField();
-        txtDiem.setBounds(120, 170, 150, 20);
-        add(txtDiem);
-
-        // Tạo các nút bấm
-        btnThem = new JButton("THEM");
-        btnThem.setBounds(50, 220, 100, 30);
-        add(btnThem);
-
-        btnSua = new JButton("SUA");
-        btnSua.setBounds(160, 220, 100, 30);
-        add(btnSua);
-
-        btnXoa = new JButton("XOA");
-        btnXoa.setBounds(50, 260, 100, 30);
-        add(btnXoa);
-
-        btnThoat = new JButton("THOAT");
-        btnThoat.setBounds(160, 260, 100, 30);
-        add(btnThoat);
-
-        // Tạo bảng hiển thị dữ liệu
-        String[] col = { "Mã", "Họ tên", "Tuổi", "Nơi sinh", "Điểm" };
-        model = new DefaultTableModel(col, 0);
-        table = new JTable(model);
-        JScrollPane sp = new JScrollPane(table);
-        sp.setBounds(300, 20, 280, 270);
-        add(sp);
-
-        // ActionListener cho nút Thêm
-        btnThem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String ma = txtMa.getText();
-                String ten = txtTen.getText();
-                String tuoi = txtTuoi.getText();
-                String noiSinh = txtNoiSinh.getText();
-                String diem = txtDiem.getText();
-                model.addRow(new Object[] { ma, ten, tuoi, noiSinh, diem });
-            }
-        });
-
-        // ActionListener cho nút Xóa
-        btnXoa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    model.removeRow(selectedRow);
-                }
-            }
-        });
-
-        // ActionListener cho nút Thoát
-        btnThoat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        // Hiển thị form
-        setVisible(true);
+    public void initUI() {
+        JFrame a = new JFrame(" Form đăng ký ");
+        a.setSize(830, 420);
+        a.setLayout(null);
+        JLabel lbA = new JLabel(" Ma: ");
+        lbA.setBounds(20, 20, 80, 25);
+        a.add(lbA);
+        txtMa.setBounds(100, 20, 80, 25);
+        a.add(txtMa);
+        JLabel lbB = new JLabel(" Ten: ");
+        lbB.setBounds(20, 60, 80, 25);
+        a.add(lbB);
+        txtTen.setBounds(100, 60, 220, 25);
+        a.add(txtTen);
+        JLabel lbc = new JLabel(" Tuoi: ");
+        lbc.setBounds(20, 100, 80, 25);
+        a.add(lbc);
+        txtTuoi.setBounds(100, 100, 80, 25);
+        a.add(txtTuoi);
+        JLabel lbD = new JLabel(" Noi Sinh: ");
+        lbD.setBounds(20, 180, 80, 25);
+        a.add(lbD);
+        txtNoisinh.setBounds(100, 150, 220, 75);
+        a.add(txtNoisinh);
+        JLabel lbH = new JLabel(" Diem: ");
+        lbH.setBounds(20, 260, 80, 25);
+        a.add(lbH);
+        txtDiem.setBounds(100, 260, 80, 25);
+        a.add(txtDiem);
+        JScrollPane pane = new JScrollPane(table);
+        JPanel panel = new JPanel();
+        panel.add(pane);
+        panel.setBounds(350, 20, 450, 300);
+        a.add(panel);
+        a.setVisible(true);
+        a.setLayout(null);
+        btnThem.setBounds(100, 300, 90, 25);
+        a.add(btnThem);
+        btnSua.setBounds(230, 300, 90, 25);
+        a.add(btnSua);
+        btnXoa.setBounds(100, 340, 90, 25);
+        a.add(btnXoa);
+        btnThoat.setBounds(230, 340, 90, 25);
+        a.add(btnThoat);
+        a.setVisible(true);
+        btnXoa.setEnabled(false);
+        btnSua.setEnabled(false);
     }
 
-    public static void main(String[] args) {
-        new GUI();
+    public void Loaddulieu() {
+        try {
+            Connection cnn = null;
+            ConnectMySql conn = new ConnectMySql();
+            cnn = conn.getConnection(DB_URL, USER_NAME, PASSWORD);
+            Statement stmt = cnn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from bang");
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String age = rs.getString(3);
+                String address = rs.getString(4);
+                int gpa = rs.getInt(5);
+                Object[] row = { id, name, age, address, gpa };
+                model = (DefaultTableModel) table.getModel();
+                model.addRow(row);
+            }
+            cnn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
